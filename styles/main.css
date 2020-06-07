@@ -1,10 +1,12 @@
 :root{
   --title-color:#322153;
   --primary-color: #34cb79;
+  --primary-color-hover: #2fb86e;
 }
 *{
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 html{
