@@ -1,17 +1,21 @@
+function returnAPIsAndInsertOptions(URL, selecElement){
+  fetch(URL)
+  .then((res) => {
+    return res.json()
+  })
+  .then( states =>{
+    for( const state of states){
+      selecElement.innerHTML += `<option value="${state.id}">${state.nome}</option>`;
+    }
+  });
+}
+
 
 function populateUFs(){
   const ufSelect = document.querySelector("select[name=uf]");
+  const URL = "https://servicodados.ibge.gov.br/api/v1/localidades/estados";
 
-  //função que é uma promessa
-  fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
-    .then((res) => {
-      return res.json()
-    })
-    .then( states =>{
-      for( const state of states){
-        ufSelect.innerHTML += `<option value="${state.id}">${state.nome}</option>`;
-      }
-    });
+  returnAPIsAndInsertOptions(URL, ufSelect);
 }
 
 populateUFs();
@@ -25,21 +29,10 @@ function getCities(event){
   const indexOfSelectedState = event.target.selectedIndex;
   stateInput.value = event.target.options[indexOfSelectedState].text;
 
-  const url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufValue}/municipios`;
+  const URL = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufValue}/municipios`;
 
-  fetch(url)
-  .then((res) => {
-    return res.json()
-  })
-  .then( cities =>{
-    for( const city of cities){
-      citySelect.innerHTML += `<option value="${city.id}">${city.nome}</option>`;
-    }
-
-    citySelect.disabled = false;
-    
-  });
-
+  returnAPIsAndInsertOptions(URL, citySelect);
+  citySelect.disabled = false;
 }
 
 document.querySelector("select[name = uf]").addEventListener("change",getCities);
