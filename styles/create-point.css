@@ -92,8 +92,6 @@ form .field-group .field +.field{
   margin-left: 24px;
 }
 
-
-
 form button{
   width: 260px;
   height: 56px;
@@ -113,4 +111,47 @@ form button{
 
 form button:hover {
   background-color: var(--primary-color-hover);
+}
+
+.items-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+.items-grid li{
+  background-color: #f5f5f5;
+  list-style: none;
+
+  border: 2px solid f5f5f5;
+  border-radius: 8px;
+  height: 180px;
+  padding: 32px 24px 16px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+
+  cursor: pointer;
+}
+
+.items-grid li span {
+  margin-top: 12px;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  color: var(--title-color);
+}
+
+.items-grid li.selected {
+  background-color: #e1faec;
+  border: 2px solid #34cb79;
+}
+
+/*evito que os campos de imagem e span sejam clicáveis! ou seja, evitar que o event:pointer não seja considerados nas imagens e nem no span*/
+.items-grid li img,
+.items-grid li span {
+  pointer-events: none;
 }

@@ -39,3 +39,56 @@ function getCities(event){
 }
 
 document.querySelector("select[name = uf]").addEventListener("change",getCities);
+const valuesItens = [];
+//Ítens de Coleta:
+//pegar todos os <li>'s
+const itemsToCollect = document.querySelectorAll(".items-grid li");
+
+for( const item of itemsToCollect){
+  item.addEventListener("click", handleSelectedItem);
+}
+
+const collectedItens = document.querySelector("input[name=items");
+let selectedItems = [];
+
+function handleSelectedItem(event) {
+  const itemLi = event.target;
+
+  //pego os id através do data-id de cada <li>:
+  const itemId = itemLi.dataset.id;
+
+  //adicionar ou remover uma classe pelo javascript: >> usa-se a função "classList"
+  // as funcionalidades da "classList" podem ser: ".add", ".remove" ou "toggle"
+  //a  funcionalidade "toggle" permite adicionar ou removar a classe do elemento de forma automática,
+  //ou seja, caso a classe já exista, será então removida, se não existir será adicionada!
+  itemLi.classList.toggle("selected")
+
+  //VERIFICA SE EXISTEM ITENS SELECIONADOS...
+  // se SIM pegar os itens selecionados!
+  //caso o método 'findIndex' encontre o id do <li> selecionado ele então irá retornar qual o index do meu array
+  //que se encontra armazenado em meu array 'selectedItems', pois a partira do index eu poderei futuramente
+  //excluir o elemento do meu array!
+  const alreadySelected = selectedItems.findIndex( item => {
+    const itemFound = item == itemId; //isso irá retornar true ou false
+    return itemFound;
+  });
+
+  //se ja estiver selecionado,...
+  if(alreadySelected >= 0){
+    //... então tiro da seleção!
+    // esse método 'filter' irá filtrar o valor do array, ou seja, caso o retorno seja verdadeiro quer dizer
+    // que o item selecionado está no array, então ele irá 'filtrar' e não será adicionado a const 'filteredItems'
+    const filteredItems = selectedItems.filter(item => {
+      const itemIsDifferent = item != itemId; 
+      return itemIsDifferent;
+    });
+
+    selectedItems = filteredItems;
+  } else{ //se NÃO estiver selecionado,...
+    // ... adicionar à seleção
+    selectedItems.push(itemId);
+  }
+
+  // atualizar o campo escondido com os itens selecionados
+  collectedItens.value = selectedItems;
+}
